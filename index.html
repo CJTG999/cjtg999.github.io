@@ -1,58 +1,596 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CJ's GitHub Pages project hub">
-  <title>CJ — Web Projects</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CJ's Projects</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #08090d;
+            --card: #11131a;
+            --card-hover: #171a23;
+            --border: #252936;
+            --text: #f5f7ff;
+            --muted: #9298aa;
+            --accent: #8b5cf6;
+            --accent-light: #a78bfa;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--text);
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        /* Background */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+            background-size: 40px 40px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 80%
+            );
+        }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: auto;
+            padding: 70px 0 40px;
+        }
+
+        /* Header */
+
+        header {
+            margin-bottom: 45px;
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            color: var(--accent-light);
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(52px, 9vw, 90px);
+            line-height: 0.9;
+            letter-spacing: -0.07em;
+        }
+
+        h1 span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        /* Search */
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search {
+            flex: 1;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 13px 15px;
+
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .search:focus {
+            border-color: var(--accent);
+        }
+
+        /* Projects */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .project {
+            position: relative;
+
+            padding: 22px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            transition:
+                transform 0.2s,
+                background 0.2s,
+                border-color 0.2s;
+
+            overflow: hidden;
+        }
+
+        .project::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(139,92,246,0.14),
+                    transparent 40%
+                );
+
+            pointer-events: none;
+        }
+
+        .project:hover {
+            transform: translateY(-4px);
+            background: var(--card-hover);
+            border-color: rgba(139,92,246,0.45);
+        }
+
+        .project h2 {
+            position: relative;
+
+            margin: 0;
+            font-size: 21px;
+            letter-spacing: -0.025em;
+        }
+
+        .description {
+            position: relative;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.55;
+
+            margin: 12px 0 20px;
+        }
+
+        .category {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 999px;
+            border: 1px solid var(--border);
+
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+
+            margin-bottom: 18px;
+        }
+
+        .buttons {
+            position: relative;
+
+            display: flex;
+            gap: 8px;
+        }
+
+        .button {
+            flex: 1;
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            text-align: center;
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            transition: 0.2s;
+        }
+
+        .open {
+            color: white;
+            background: var(--accent);
+        }
+
+        .open:hover {
+            background: var(--accent-light);
+        }
+
+        .github {
+            color: var(--text);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .github:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* Empty / error */
+
+        .message {
+            grid-column: 1 / -1;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            border: 1px dashed var(--border);
+            border-radius: 18px;
+
+            color: var(--muted);
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 40px;
+
+            text-align: center;
+
+            color: #656b7d;
+
+            font-size: 12px;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+            .container {
+                padding-top: 40px;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="bg-grid"></div>
-  <div class="glow glow-one"></div>
-  <div class="glow glow-two"></div>
 
-  <main class="container">
-    <header class="hero">
-      <div class="hero-top">
-        <div>
-          <div class="eyebrow">GITHUB PROJECT HUB</div>
-          <h1>CJ<span>.</span></h1>
-          <p class="subtitle">My web projects, games, tools, and experiments.</p>
+<div class="container">
+
+    <header>
+        <div class="eyebrow">PROJECT HUB</div>
+
+        <h1>
+            CJ<span>.</span>
+        </h1>
+
+        <div class="subtitle">
+            My projects, tools, games, and experiments.
         </div>
-        <a id="githubProfile" class="github-link" href="#" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><strong id="projectCount">—</strong><span>Pages sites</span></div>
-        <div class="stat"><strong id="repoCount">—</strong><span>Public repos</span></div>
-        <div class="stat"><strong id="lastUpdated">—</strong><span>Last checked</span></div>
-      </div>
     </header>
 
-    <section class="toolbar">
-      <div class="search-wrap">
-        <span>⌕</span>
-        <input id="search" type="search" placeholder="Search projects..." autocomplete="off">
-      </div>
-      <select id="sort">
-        <option value="updated">Recently updated</option>
-        <option value="name">Name</option>
-        <option value="stars">Stars</option>
-      </select>
-      <button id="refresh" type="button">↻ Refresh</button>
-    </section>
 
-    <div id="status" class="status">Loading your GitHub Pages sites…</div>
-    <section id="projects" class="projects" aria-live="polite"></section>
+    <div class="toolbar">
+
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Search projects..."
+        >
+
+    </div>
+
+
+    <main
+        id="projects"
+        class="projects"
+    >
+        <div class="message">
+            Loading projects...
+        </div>
+    </main>
+
 
     <footer>
-      <span>Automatically discovered from GitHub</span>
-      <span>•</span>
-      <span id="footerUser">cjtg999</span>
+        Automatically loaded from index.json
     </footer>
-  </main>
 
-  <script src="script.js"></script>
+</div>
+
+
+<script>
+
+    /*
+        ==========================================
+        SETTINGS
+        ==========================================
+    */
+
+    // Change this if you ever move the homepage
+    const BASE_URL = "https://cjtg999.github.io/";
+
+
+    /*
+        ==========================================
+        LOAD JSON
+        ==========================================
+    */
+
+    let projects = [];
+
+
+    async function loadProjects() {
+
+        const container = document.getElementById("projects");
+
+        try {
+
+            const response = await fetch(
+                "./index.json",
+                {
+                    cache: "no-cache"
+                }
+            );
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "Could not load index.json"
+                );
+            }
+
+
+            const data = await response.json();
+
+
+            projects = data.projects || [];
+
+
+            renderProjects(projects);
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            container.innerHTML = `
+                <div class="message">
+                    <strong>Couldn't load projects.</strong>
+                    <br><br>
+                    Make sure <b>index.json</b> exists
+                    next to index.html.
+                </div>
+            `;
+
+        }
+
+    }
+
+
+    /*
+        ==========================================
+        CREATE PROJECT CARD
+        ==========================================
+    */
+
+    function createProject(project) {
+
+        // Turn "FNF-Web-Engine" into the actual URL
+        const siteURL =
+            BASE_URL +
+            project.extension.replace(/^\/+|\/+$/g, "") +
+            "/";
+
+
+        // Optional GitHub repository
+        let githubButton = "";
+
+        if (project.github) {
+
+            githubButton = `
+                <a
+                    class="button github"
+                    href="https://github.com/cjtg999/${project.github}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    GitHub ↗
+                </a>
+            `;
+
+        }
+
+
+        return `
+
+            <article class="project">
+
+                <h2>
+                    ${escapeHTML(project.name)}
+                </h2>
+
+
+                <p class="description">
+                    ${escapeHTML(
+                        project.description ||
+                        "No description."
+                    )}
+                </p>
+
+
+                ${
+                    project.category
+                    ?
+                    `
+                    <div class="category">
+                        ${escapeHTML(project.category)}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+
+                <div class="buttons">
+
+                    <a
+                        class="button open"
+                        href="${escapeHTML(siteURL)}"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Open Site ↗
+                    </a>
+
+                    ${githubButton}
+
+                </div>
+
+            </article>
+
+        `;
+
+    }
+
+
+    /*
+        ==========================================
+        RENDER
+        ==========================================
+    */
+
+    function renderProjects(list) {
+
+        const container =
+            document.getElementById("projects");
+
+
+        if (!list.length) {
+
+            container.innerHTML = `
+                <div class="message">
+                    No projects found.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            list
+                .map(createProject)
+                .join("");
+
+    }
+
+
+    /*
+        ==========================================
+        SEARCH
+        ==========================================
+    */
+
+    document
+        .getElementById("search")
+        .addEventListener("input", function () {
+
+            const query =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+
+            const filtered =
+                projects.filter(project => {
+
+                    return [
+
+                        project.name,
+
+                        project.description,
+
+                        project.category,
+
+                        project.extension
+
+                    ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(query);
+
+                });
+
+
+            renderProjects(filtered);
+
+        });
+
+
+    /*
+        ==========================================
+        SECURITY / HTML ESCAPING
+        ==========================================
+    */
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+
+    /*
+        START
+        ==========================================
+    */
+
+    loadProjects();
+
+</script>
+
 </body>
 </html>
