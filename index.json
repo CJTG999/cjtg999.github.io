@@ -1,0 +1,19 @@
+{
+    "projects": [
+        {
+            "name": "Astra Client",
+            "extension": "SH-Astra-Client-v2.1",
+            "description": "astra client for eaglercraft",
+            "category": "Games",
+            "github": "SH-Astra-Client-v2.1"
+        },
+
+        {
+            "name": "Psych Engine",
+            "extension": "Psych-Engine",
+            "description": "HTML port of a really cool game I play.",
+            "category": "Games",
+            "github": "Psych-Engine"
+        }
+    ]
+}
