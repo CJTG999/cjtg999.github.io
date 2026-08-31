@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CJ's GitHub Pages project hub">
+  <title>CJ — Web Projects</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <main class="container">
+    <header class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">GITHUB PROJECT HUB</div>
+          <h1>CJ<span>.</span></h1>
+          <p class="subtitle">My web projects, games, tools, and experiments.</p>
+        </div>
+        <a id="githubProfile" class="github-link" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong id="projectCount">—</strong><span>Pages sites</span></div>
+        <div class="stat"><strong id="repoCount">—</strong><span>Public repos</span></div>
+        <div class="stat"><strong id="lastUpdated">—</strong><span>Last checked</span></div>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <div class="search-wrap">
+        <span>⌕</span>
+        <input id="search" type="search" placeholder="Search projects..." autocomplete="off">
+      </div>
+      <select id="sort">
+        <option value="updated">Recently updated</option>
+        <option value="name">Name</option>
+        <option value="stars">Stars</option>
+      </select>
+      <button id="refresh" type="button">↻ Refresh</button>
+    </section>
+
+    <div id="status" class="status">Loading your GitHub Pages sites…</div>
+    <section id="projects" class="projects" aria-live="polite"></section>
+
+    <footer>
+      <span>Automatically discovered from GitHub</span>
+      <span>•</span>
+      <span id="footerUser">cjtg999</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
